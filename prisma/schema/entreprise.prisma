@@ -1,0 +1,9 @@
+model Entreprise{
+    id Int @id @default(autoincrement())
+    raisonSociale String @db.VarChar(255)
+    siret String @db.VarChar(255) @unique
+    password String @db.VarChar(255)
+    ceo String? @db.VarChar(255)
+    employes Employe[] @relation("EntrepriseEmployes")
+    ordinateurs Ordinateur[] @relation("EntrepriseOrdinateurs")
+}

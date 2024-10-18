@@ -1,0 +1,18 @@
+model Employe {
+    id           Int         @id @default(autoincrement())
+    firstName    String      @db.VarChar(255)
+    lastName     String      @db.VarChar(255)
+    password     String      @db.VarChar(255)
+    mail         String      @unique @db.VarChar(255)
+    age          Int
+    entreprise   Entreprise? @relation("EntrepriseEmployes", fields: [entrepriseId], references: [id])
+    entrepriseId Int
+    ordinateur   Ordinateur?
+    ordinateurId Int?        @unique
+    blames Int @default(0)
+    blameLog BlameLog[]
+
+    @@index([firstName])
+    @@index([lastName])
+    @@index([mail]) // pour être plus rapide pour la recherche
+}

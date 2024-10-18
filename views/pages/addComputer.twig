@@ -1,0 +1,32 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/addComputer.css">
+{% endblock %}
+
+{% block main %}
+<main>
+    <h1>Ajouter un Ordinateur</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form action="/ordinateur" method="POST">
+        <input type="hidden" name="entrepriseId" value="{{ entrepriseId }}">
+
+        <label for="mac">Adresse MAC :</label>
+        <input type="text" id="mac" name="mac" required><br>
+
+        <label for="employe">Assigner à un employé :</label>
+        <select id="employe" name="employeId">
+            <option value="">-- Aucune affectation --</option>
+            {% for employe in employesDisponibles %}
+                <option value="{{ employe.id }}">{{ employe.firstName }} {{ employe.lastName }}</option>
+            {% endfor %}
+        </select><br>
+
+        <div>
+            <input type="submit" value="Ajouter l'ordinateur">
+        </div>
+    </form>
+</main>
+{% endblock %}

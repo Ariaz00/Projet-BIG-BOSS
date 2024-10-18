@@ -1,0 +1,46 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/register.css">
+{% endblock %}
+
+{% block title %}
+	<title>{{title}}</title>
+{% endblock %}
+
+{% block main %}
+	<main>
+		<section>
+			<div>
+				<h1>Inscription</h1>
+				<div>
+					<form action="/register" method="post">
+						<div>
+							<label for="raisonSociale">Raison sociale</label>
+							<input type="text" name="raisonSociale" id="raisonSociale">
+						</div>
+						<div>
+							<label for="siret">Siret</label>
+							<input type="text" name="siret" id="siret">
+						</div>
+						<div>
+							<label for="password">Votre mdp</label>
+							<input type="password" name="password" id="password">
+						</div>
+						<div>
+							<label for="confirm_password">Confirmez votre mdp</label>
+							<input type="password" name="confirm_password" id="confirm_password">
+						</div>
+						{% if error %}
+							<p>{{error.confirm_password}}</p>
+						{% endif %}
+						<p>Vous avez un compte ?
+							<a href="/login">Se connecter</a>
+						</p>
+						<button>S'inscrire</button>
+					</form>
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock %}

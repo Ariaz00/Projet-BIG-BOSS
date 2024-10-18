@@ -1,0 +1,33 @@
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/header.css">
+{% endblock %}
+
+<header>
+	<div>
+		<img src="/assets/img/entreprise.png" alt="Logo">
+	</div>
+	{% if not (current_page == 'login' or current_page == 'register') %}
+		<div>
+			<form action="/logout" method="POST" class="logout" style="display: inline;">
+				<button type="submit">Déconnexion</button>
+			</form>
+		</div>
+	{% endif %}
+	{# <nav>
+				<ul>
+					{% if entreprise %}
+						<li>
+							<a href="/logout">Déconnexion</a>
+						</li>
+					{% else %}
+						<li>
+							<a href="/register">Inscription</a>
+						</li>
+		                
+						<li>
+							<a href="/login">Connexion</a>
+						</li>
+					{% endif %}
+				</ul>
+			</nav> #}
+</header>

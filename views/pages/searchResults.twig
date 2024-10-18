@@ -1,0 +1,55 @@
+{% extends "../layouts/base.twig"%}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/searchResults.css">
+{% endblock %}
+
+
+{% block main %}
+	<main>
+		<h1>Résultats de recherche pour "{{ query }}"</h1>
+
+		<h2>Employés trouvés</h2>
+		{% if employes.length > 0 %}
+			<ul>
+				{% for employe in employes %}
+					<li>
+						{{ employe.firstName }}
+						{{ employe.lastName }}
+						-
+						{{ employe.mail }}
+						{% if employe.ordinateur %}
+							(Ordinateur assigné:
+							{{ employe.ordinateur.mac }})
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>Aucun employé trouvé.</p>
+		{% endif %}
+
+		<h2>Ordinateurs trouvés</h2>
+		{% if ordinateurs.length > 0 %}
+			<ul>
+				{% for ordinateur in ordinateurs %}
+					<li>
+						MAC:
+						{{ ordinateur.mac }}
+						{% if ordinateur.employe %}
+							(Assigné à:
+							{{ ordinateur.employe.firstName }}
+							{{ ordinateur.employe.lastName }})
+						{% else %}
+							(Non assigné)
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ul>
+		{% else %}
+			<p>Aucun ordinateur trouvé.</p>
+		{% endif %}
+
+		<a href="/">Retour au dashboard</a>
+	</main>
+{% endblock %}

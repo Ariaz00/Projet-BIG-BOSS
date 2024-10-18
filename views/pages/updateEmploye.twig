@@ -1,0 +1,28 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/updateEmploye.css">
+{% endblock %}
+
+{% block main %}
+<main>
+    <h1>Modifier l'Employé</h1>
+    <form action="/employe/update/{{ employe.id }}" method="POST">
+        <label for="lastName">Nom :</label>
+        <input type="text" name="lastName" id="lastName" value="{{ employe.lastName }}" required><br>
+
+        <label for="firstName">Prénom :</label>
+        <input type="text" name="firstName" id="firstName" value="{{ employe.firstName }}" required><br>
+
+        <label for="mail">Email :</label>
+        <input type="email" id="mail" name="mail" value="{{ employe.mail }}" required><br>
+
+        <label for="age">Âge :</label>
+        <input type="number" id="age" name="age" value="{{ employe.age }}" min="0"><br>
+
+        <div>
+            <input type="submit" value="Mettre à jour l'employé">
+        </div>
+    </form>
+</main>
+{% endblock %}

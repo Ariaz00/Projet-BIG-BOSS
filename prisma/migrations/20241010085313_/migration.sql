@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE `employe` ADD COLUMN `blames` INTEGER NOT NULL DEFAULT 0;
+
+-- CreateTable
+CREATE TABLE `BlameLog` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `employeId` INTEGER NOT NULL,
+    `reason` VARCHAR(191) NOT NULL,
+    `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- AddForeignKey
+ALTER TABLE `BlameLog` ADD CONSTRAINT `BlameLog_employeId_fkey` FOREIGN KEY (`employeId`) REFERENCES `Employe`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -1,0 +1,33 @@
+{% extends "../layouts/base.twig"%}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/employe.css">
+{% endblock %}
+
+{% block main %}
+<main>
+	<h1>Ajouter un employé</h1>
+    <form action="/employe" method="POST">
+        <label for="lastName">Nom :</label>
+        <input type="text" name="lastName" id="lastName" required><br>
+
+        <label for="firstName">Prénom :</label>
+        <input type="text" name="firstName" id="firstName" required><br>
+
+        <label for="mail">Email :</label>
+        <input type="email" id="mail" name="mail" required><br>
+
+        <label for="age">Age :</label>
+        <input type="number" id="age" name="age" min="0"><br>
+
+        <label for="password">Mot de passe</label>
+        <input type="password" name="password" id="password">
+
+        <input type="hidden" name="entrepriseId" value="{{ entrepriseId }}">
+
+        <div>
+            <input type="submit" value="Ajouter l'employé">
+        </div>        
+    </form>
+</main>
+{% endblock %}

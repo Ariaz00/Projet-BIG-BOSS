@@ -1,0 +1,7 @@
+model BlameLog {
+  id        Int      @id @default(autoincrement())
+  employeId Int
+  employe   Employe  @relation(fields: [employeId], references: [id], onDelete: Cascade)  // Supprimer blâmes lors de la suppression de l'employé
+  reason    String
+  date      DateTime @default(now())
+}

@@ -1,0 +1,128 @@
+{% extends "../layouts/base.twig" %}
+
+{% block style %}
+	<link rel="stylesheet" href="/assets/css/dashboard.css">
+{% endblock %}
+
+{% block main %}
+
+	<main>
+		<div class="dashboard-header">
+			<h1>Dashboard</h1>
+			<form action="/search" method="GET" class="search-form">
+				<input type="text" name="query" placeholder="Rechercher un employé ou un ordinateur...">
+				<button type="submit">Rechercher</button>
+			</form>
+		</div>
+
+		<div class="actions">
+			<li>
+				<a href="/ordinateur">Ajouter un ordinateur</a>
+			</li>
+			<li>
+				<a href="/employe">Ajouter un employé</a>
+			</li>
+		</div>
+
+		<h2>Liste des Employés</h2>
+		<div class="section">
+			<table>
+				<tbody>
+					{% for employe in employes %}
+						<tr style="background-color: {{ employe.color }};">
+							<td class="employe-info">
+								<img src="/assets/img/worker.png" alt="Photo de {{ employe.firstName }} {{ employe.lastName }}" class="employe-image">
+								<div>
+									<p>Nom :
+										{{ employe.lastName }}
+										{{ employe.status }}</p>
+									<p>Prénom :
+										{{ employe.firstName }}</p>
+									<p>Email :
+										{{ employe.mail }}</p>
+									<p>Age :
+										{{ employe.age }}</p>
+									<p>Nombre de blâmes :
+										{{ employe.blames }}</p>
+								</div>
+							</td>
+							<td class="actions">
+								<form action="/employe/update/{{ employe.id }}" method="GET">
+									<button type="submit">Modifier</button>
+								</form>
+								<form action="/employe/delete/{{ employe.id }}" method="POST">
+									<button type="submit">Supprimer</button>
+								</form>
+								{% if employe.blames < 3 %}
+									<div class="blame-form">
+										<form action="/employe/addBlame/{{ employe.id }}" method="POST">
+											<label for="reason">Raison du blâme :</label>
+											<input type="text" id="reason" name="reason" required>
+											<button type="submit">Ajouter un blâme</button>
+										</form>
+									</div>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<h2>Liste des Ordinateurs</h2>
+		<div class="section">
+			<table>
+				<tbody>
+					{% for ordinateur in ordinateurs %}
+						<tr>
+							<td class="ordinateur-image">
+								<img src="/assets/img/pc.png" alt="Ordinateur" class="ordinateur-img">
+							</td>
+							<td>
+								<p>Adresse MAC :
+									{{ ordinateur.mac }}</p>
+								<p>Employé assigné :
+									{{ ordinateur.employe ? ordinateur.employe.firstName ~ ' ' ~ ordinateur.employe.lastName : "Non assigné" }}</p>
+							</td>
+							<td class="actions">
+								{% if ordinateur.employe %}
+									<form action="/ordinateur/desassigner/{{ ordinateur.id }}" method="POST">
+										<button type="submit">Désassigner</button>
+									</form>
+								{% else %}
+									<div
+										class="assign-form">
+										<!-- Conteneur pour centrer le select et les boutons -->
+										<form action="/ordinateur/assigner/{{ ordinateur.id }}" method="POST" class="assign-form">
+											<div
+												class="centered-container">
+												<!-- Nouveau conteneur centré -->
+												<select name="employeId">
+													<option value="">Sélectionnez un employé</option>
+													{% for employe in employes %}
+														{% if not employe.ordinateur and employe.blames < 3 %}
+															<option value="{{ employe.id }}">{{ employe.firstName }}
+																{{ employe.lastName }}</option>
+														{% endif %}
+													{% endfor %}
+												</select>
+												<div
+													class="button-container">
+													<!-- Conteneur pour les boutons -->
+													<button type="submit">Assigner</button>
+													<form action="/ordinateur/supprimer/{{ ordinateur.id }}" method="POST">
+														<button type="submit">Supprimer</button>
+													</form>
+												</div>
+											</div>
+										</form>
+									</div>
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</main>
+{% endblock %}
