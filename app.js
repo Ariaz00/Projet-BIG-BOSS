@@ -9,6 +9,7 @@ const ordinateurRouter = require("./router/ordinateurRouter");
 const searchRouter = require("./router/searchRouter");
 
 const app = express(); // on lance le server
+require("dotenv").config()
 app.use(express.static("./public"))
 app.use(express.urlencoded({extended:true})) // avant le router, on lit les contenus des forms
 app.use(session({
@@ -26,6 +27,6 @@ app.use(ordinateurRouter)
 app.use(searchRouter)
 
 
-app.listen(3000, ()=>{
+app.listen(process.env.PORT, (err)=>{
     console.log("Connecté sur le port 3000");  
 }) 
